@@ -4,6 +4,10 @@ author: "Ali Makki"
 date: "March 25, 2016"
 output: html_document
 ---
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.width=12, fig.height=8, fig.path='Figs/',
+                      echo=FALSE, warning=FALSE, message=FALSE)
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -252,14 +256,14 @@ Using scatterplot to see relation-ship between fixed.acidity, pH, density and ci
 
 ```{r echo=FALSE}
 ggplot(aes(x = pH, y = citric.acid), data = wines) +
-  geom_point()
+  geom_jitter(alpha=1/5)
 
 ggplot(aes(x = citric.acid, y = fixed.acidity), data = wines) +
-  geom_point()+ 
+  geom_jitter(alpha = 1/5)
   xlim(0, 0.65)
 
 ggplot(aes(x = density, y = fixed.acidity), data = wines) +
-  geom_point() 
+  geom_jitter(alpha=1/5)
   
 
 
@@ -324,8 +328,8 @@ by(wines$alcohol, wines$quality, summary)
 highest quality wines (8) have the highest median and the lowest quality wines which are labeled at 3 have the lowest amount of alcohol, except for the ones that are scored at 5.
 
 ```{r echo=FALSE}
-ggplot(aes(x = quality, y = pH), data = wines) +
-  geom_line(stat = 'summary', fun.y = mean) 
+#ggplot(aes(x = quality, y = pH), data = wines) +
+#  geom_line(stat = 'summary', fun.y = mean) 
 
 ggplot(data = wines, aes(x = cut_interval(x = quality, length = 1), y = pH)) +
   geom_boxplot()
@@ -335,8 +339,8 @@ by(wines$pH, wines$quality, summary)
 I see a weak trend towards more basic wines having higher quality score. although the corrolation is very weak we can see that the median for wines with quality 8 is highest.
 
 ```{r echo=FALSE}
-ggplot(aes(x = quality, y = volatile.acidity), data = wines) +
-  geom_line(stat = 'summary', fun.y = mean) 
+#ggplot(aes(x = quality, y = volatile.acidity), data = wines) +
+#  geom_line(stat = 'summary', fun.y = mean) 
 
 ggplot(data = wines, aes(x = cut_interval(x = quality, length = 1), y = volatile.acidity)) +
   geom_boxplot()
@@ -593,17 +597,17 @@ ggplot(aes(x = quality), data = wines) +
 #ggplot(aes(x = alcohol), data = wines) +
 #  geom_histogram() +
 #  labs(title = "Count of wines with different amount of alcohol")
-
+table(wines$quality)
 ```
 
 ##description 1:
 
-The majority of samples are of quality 5 or 6.
+The majority of samples are of quality 5 or 6 (82%), with median at 6 and mean at 5.636.It's still a normal distribution, but with having much fewer samples for qualities 3 and 8, it will be harder to build a model.
 
 ##Plot two:
 ```{r echo=FALSE}
 ggplot(data = wines, aes(x = cut_interval(x = quality, length = 1), y = alcohol)) +
-  labs(x = 'quality', title = "Wines alcohol by quality") +
+  labs(x = 'quality', y = "alcohol(% by volume)", title = "Wines alcohol by quality") +
   geom_boxplot()
 
 #ggplot(data = wines, aes(x = cut_interval(x = quality, length = 1), y = pH)) +
@@ -621,7 +625,7 @@ ggplot(data = wines, aes(x = cut_interval(x = quality, length = 1), y = alcohol)
 
 ##Description 2:
 
-The largest corrolation is seen between density and volatile.acidity. Higher alcohol seem to correspond to higher quality as well. 
+The largest corrolation is seen between density and volatile.acidity. Higher alcohol seem to correspond to higher quality as well. Wines with quality assessed at 8 have median alcohol of 12.15 and wines assessed at 3 have median of 9.92. There is one exception though. wines with quality 4 have a median alcohol of 10 which is higher than that of the ones with 9.7.
 
 ##Plot three:
 
